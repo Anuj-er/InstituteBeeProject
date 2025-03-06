@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduTech Institute</title>
+    <!-- Added Font Awesome CDN link instead of kit -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #00BFB3;
+            --secondary: #4A4A8F;
+            --text: #333;
+            --light: #f5f5f5;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: var(--light);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--secondary);
+            color: white;
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            transition: transform 0.3s ease; /* Added transition for smooth effect */
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 2rem;
+            transition: margin-left 0.3s ease; /* Added transition for smooth effect */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            min-width: 150px;
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .dropdown-item:hover {
+            background: var(--light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .recent-activity {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .activity-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Mobile hamburger menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-right: 1rem;
+            }
+
+            .header {
+                padding-left: 0;
+            }
+
+            .show-sidebar .sidebar {
+                transform: translateX(0);
+            }
+
+            .show-sidebar .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container" id="dashboardContainer">
+        <aside class="sidebar">
+            <div class="logo">EduTech Admin</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            Students
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            Staff
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-book"></i>
+                            Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            Attendance
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-bullhorn"></i>
+                            Announcements
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <!-- Added menu toggle button for mobile -->
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <h1>Dashboard Overview</h1>
+                <div class="profile-section">
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-pic" id="profileInitial"></div>
+                        <span id="userName">Loading...</span>
+                        <i class="fas fa-chevron-down"></i>
+                        
+                        <!-- Added dropdown menu for profile -->
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <a href="/login" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Students</h3>
+                    <div class="number">1,234</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Staff</h3>
+                    <div class="number">56</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Courses</h3>
+                    <div class="number">24</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Attendance Rate</h3>
+                    <div class="number">92%</div>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <span>New student registration</span>
+                        <span>2 minutes ago</span>
+                    </li>
+                    <li class="activity-item">
+                        <span>Course schedule updated</span>
+                        <span>1 hour ago</span>
+                    </li>
+                    <li class="activity-item">
+                        <span>Staff meeting scheduled</span>
+                        <span>3 hours ago</span>
+                    </li>
+                    <li class="activity-item">
+                        <span>New announcement posted</span>
+                        <span>5 hours ago</span>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        // Try to get user data from the server
+        fetch('/api/current-user')
+            .then(response => {
+                if (response.status === 401) {
+                    // Redirect to login if not authenticated
+                    window.location.href = '/login';
+                    return;
+                }
+                return response.json();
+            })
+            .then(userData => {
+                if (userData) {
+                    updateUserDisplay(userData);
+                    loadDashboardData();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading user data:', error);
+            });
+        
+        function updateUserDisplay(userInfo) {
+            const userNameElement = document.getElementById('userName');
+            const profileInitialElement = document.getElementById('profileInitial');
+            
+            if (userInfo && userInfo.firstName) {
+                // Display the first name
+                userNameElement.textContent = userInfo.firstName;
+                
+                // Set the profile picture initial
+                if (profileInitialElement) {
+                    profileInitialElement.textContent = userInfo.firstName.charAt(0).toUpperCase();
+                }
+                
+                // Add role-specific customizations based on user role
+                if (userInfo.role === 'admin') {
+                    document.querySelector('.logo').textContent = 'EduTech Admin';
+                } else if (userInfo.role === 'staff') {
+                    document.querySelector('.logo').textContent = 'EduTech Staff';
+                } else {
+                    document.querySelector('.logo').textContent = 'Student Portal';
+                }
+            }
+        }
+        
+        // Load admin dashboard data
+        function loadDashboardData() {
+            // This would typically fetch actual data from your API
+            // For now, we'll add some animations to the stat cards
+            
+            // Animate the stat numbers with a counting effect
+            const statNumbers = document.querySelectorAll('.number');
+            
+            statNumbers.forEach(numberEl => {
+                const finalValue = numberEl.textContent;
+                let startValue = 0;
+                
+                // Handle percentage values
+                if (finalValue.includes('%')) {
+                    const numericValue = parseInt(finalValue);
+                    
+                    const duration = 1500; // animation duration in ms
+                    const interval = 20; // update interval
+                    const step = numericValue / (duration / interval);
+                    
+                    const timer = setInterval(() => {
+                        startValue += step;
+                        if (startValue > numericValue) {
+                            startValue = numericValue;
+                            clearInterval(timer);
+                        }
+                        numberEl.textContent = Math.floor(startValue) + '%';
+                    }, interval);
+                } 
+                // Handle numeric values
+                else {
+                    const numericValue = parseInt(finalValue.replace(/,/g, ''));
+                    
+                    const duration = 1500; // animation duration in ms
+                    const interval = 20; // update interval
+                    const step = numericValue / (duration / interval);
+                    
+                    const timer = setInterval(() => {
+                        startValue += step;
+                        if (startValue > numericValue) {
+                            startValue = numericValue;
+                            clearInterval(timer);
+                        }
+                        numberEl.textContent = Math.floor(startValue).toLocaleString();
+                    }, interval);
+                }
+            });
+            
+            // You could also fetch and load real-time data here
+            // For example, fetching recent activities from the server
+            loadRecentActivities();
+        }
+        
+        // Load recent activities (this would typically come from an API)
+        function loadRecentActivities() {
+            // If you want to implement actual API calls, this is where you'd do it
+            // For now, we'll just add a visual effect to the activity list
+            
+            const activityItems = document.querySelectorAll('.activity-item');
+            
+            activityItems.forEach((item, index) => {
+                // Stagger the fade-in of each activity item
+                setTimeout(() => {
+                    item.style.opacity = '0';
+                    item.style.transition = 'opacity 0.5s ease-in-out';
+                    
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, 100);
+                }, index * 200);
+            });
+        }
+    
+        // Profile dropdown functionality
+        const profileDropdown = document.getElementById('profileDropdown');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        
+        if (profileDropdown) {
+            profileDropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+            });
+        }
+    
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', function() {
+            if (dropdownMenu && dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    
+        // Prevent dropdown from closing when clicking inside it
+        if (dropdownMenu) {
+            dropdownMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show-sidebar');
+            });
+        }
+    
+        // Handle logout functionality
+        const logoutLink = document.querySelector('a[href="/login"].dropdown-item');
+        
+        if (logoutLink) {
+            // Prevent the default link behavior
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Redirect to the logout endpoint
+                window.location.href = '/logout';
+            });
+        }
+        
+        // Add click listeners to sidebar nav items
+        const navItems = document.querySelectorAll('.nav-item a');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Only prevent default if the href is "#"
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    
+                    // Remove active class from all nav links
+                    navItems.forEach(link => link.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Get the section name from the icon or text
+                    const sectionName = this.querySelector('i').className.split('fa-')[1] || 
+                                        this.textContent.trim();
+                    
+                    console.log(`Navigating to section: ${sectionName}`);
+                    // You would typically load different content here based on the section
+                }
+            });
+        });
+        
+        // Make stat cards clickable to show more details
+        const statCards = document.querySelectorAll('.stat-card');
+        
+        statCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const statType = this.querySelector('h3').textContent;
+                console.log(`Clicked on stat: ${statType}`);
+                
+                // Here you could show a modal with more detailed information
+                // or navigate to a detailed view of the selected stat
+            });
+        });
+    });
+    </script>
+</body>
+</html>

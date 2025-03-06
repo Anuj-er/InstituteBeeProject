@@ -1,0 +1,17 @@
+Project Evaluation 2
+Extend your existing project with following requirements
+	Use express
+	Use middlewares
+	Handle and serve static pages with express
+	Routing methods, Route paths, Route parameters, Route Handlers
+	Routing using express use routing middlewares
+	Handle exceptions using exception handling middlewares
+	Use minimum 5 third party middlewares
+	send response along with relevant status codes
+	Project must have proper directory structure
+	
+	Presentation must be there, 
+	highlight your innovation 
+	application for day to day life
+
+Note:- Keep presentation and working code on each laptop

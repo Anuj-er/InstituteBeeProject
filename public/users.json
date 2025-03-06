@@ -1,0 +1,59 @@
+[
+  {
+    "firstName": "Admin",
+    "lastName": "User",
+    "email": "admin@example.com",
+    "username": "admin",
+    "password": "admin",
+    "role": "admin"
+  },
+  {
+    "firstName": "akanksha",
+    "lastName": "mishra",
+    "email": "akanksha@gmail.com",
+    "password": "1234",
+    "role": "student"
+  },
+  {
+    "firstName": "anushi",
+    "lastName": "anushi",
+    "email": "anushi@gmail.com",
+    "password": "1234",
+    "role": "student"
+  },
+  {
+    "firstName": "Anuj",
+    "lastName": "Kumar",
+    "email": "anuj1699.be23@chitkara.edu.in",
+    "password": "Anuj@2005",
+    "role": "student"
+  },
+  {
+    "firstName": "Anuj",
+    "lastName": "Kumar",
+    "email": "anujkumar142000@gmail.com",
+    "password": "Anuj@2005",
+    "role": "staff"
+  },
+  {
+    "firstName": "Anushi",
+    "lastName": "Rajput AHAR",
+    "email": "anushi1700.be23@chitkara.edu.in",
+    "password": "Anushi@2006",
+    "role": "student"
+  },
+  {
+    "firstName": "Akanksha ",
+    "lastName": "Mishra",
+    "email": "akanksha1681.be23@chitkara.edu.in",
+    "password": "Anuj@2005",
+    "role": "admin"
+  },
+  {
+    "firstName": "Abhinav",
+    "lastName": "Rathee",
+    "email": "abhinav1675.be23@chitkara.edu.in",
+    "password": "Anuj@2005",
+    "role": "student"
+  }
+]
