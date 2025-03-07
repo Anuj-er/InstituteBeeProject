@@ -1,3 +1,5 @@
+// Handles user login, registration, and logout.
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
